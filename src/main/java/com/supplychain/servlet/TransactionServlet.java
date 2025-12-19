@@ -64,6 +64,31 @@ public class TransactionServlet extends HttpServlet {
             }
             
             Transaction transaction = gson.fromJson(jsonBuffer.toString(), Transaction.class);
+
+            // -------- Server-side Validation (Review-2) --------
+if (transaction.getItemId() == null || transaction.getItemId().isBlank()) {
+    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+    out.print("{\"error\":\"Item ID cannot be empty\"}");
+    return;
+}
+
+if (transaction.getFromLocation() == null || transaction.getFromLocation().isBlank()) {
+    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+    out.print("{\"error\":\"From Location is required\"}");
+    return;
+}
+
+if (transaction.getToLocation() == null || transaction.getToLocation().isBlank()) {
+    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+    out.print("{\"error\":\"To Location is required\"}");
+    return;
+}
+
+if (transaction.getStatus() == null || transaction.getStatus().isBlank()) {
+    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+    out.print("{\"error\":\"Status is required\"}");
+    return;
+}
             
             // Generate transaction ID if not provided
             if (transaction.getTransactionId() == null || transaction.getTransactionId().isEmpty()) {
