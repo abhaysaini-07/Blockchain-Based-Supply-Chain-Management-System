@@ -37,17 +37,26 @@ public class TransactionServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
-        
+
+                 //IMPROVED ERROR HANDLING (SERVLET) - Review-2
         try {
             var transactions = blockchainService.getAllTransactions();
             out.print(gson.toJson(transactions));
-        } catch (Exception e) {
+        } catch (JsonSyntaxException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            out.print("{\"error\":\"Invalid JSON format\"}");
+        }
+        catch (BlockchainException e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            out.print("{\"error\":\"" + e.getMessage() + "\"}");
+            out.print("{\"error\":\"Blockchain processing failed\"}");
+        }
+        catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            out.print("{\"error\":\"Unexpected server error\"}");
         }
         
         out.flush();
-    }
+            }
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
