@@ -8,47 +8,47 @@ This project implements a blockchain-based supply chain management system that t
 
 ## ✨ Features Implemented
 
-### 1. OOP Implementation (10 marks)
+### 1. OOP Implementation
 - **Polymorphism**: Demonstrated through interface implementations (`IBlockchain`, `ISupplyChainItem`, `IDatabaseOperations`)
 - **Inheritance**: `SupplyChainItem` implements `ISupplyChainItem` interface
 - **Exception Handling**: Custom exceptions (`BlockchainException`, `DatabaseException`) with proper error handling
 - **Interfaces**: Multiple interfaces defining contracts for blockchain, supply chain items, and database operations
 
-### 2. Collections & Generics (6 marks)
+### 2. Collections & Generics
 - **Collections**: Extensive use of `List`, `Map`, `Set` from Java Collections Framework
 - **Generics**: Generic methods in `CollectionUtils` class (`filter`, `map`)
 - **Thread-safe Collections**: `CopyOnWriteArrayList` for concurrent access
 - **Stream API**: Used for filtering, mapping, and processing collections
 
-### 3. Multithreading & Synchronization (4 marks)
+### 3. Multithreading & Synchronization 
 - **Multithreading**: `ExecutorService` for asynchronous block processing
 - **Synchronization**: `synchronized` blocks and `lock` objects for thread safety
 - **CompletableFuture**: Asynchronous operations for blockchain validation and transaction addition
 - **Thread Pool**: Fixed thread pool executor for managing concurrent tasks
 
-### 4. Database Operations Classes (7 marks)
+### 4. Database Operations Classes 
 - **DAO Pattern**: `BlockDAO` class implementing `IDatabaseOperations` interface
 - **Database Connection**: `DatabaseConnection` singleton class for connection management
 - **CRUD Operations**: Complete Create, Read, Update operations for blocks and transactions
 - **Prepared Statements**: Secure database queries using prepared statements
 
-### 5. Database Connectivity (JDBC) (3 marks)
+### 5. Database Connectivity (JDBC) 
 - **JDBC Driver**: MySQL JDBC connector integration
 - **Connection Management**: Proper connection handling with try-with-resources
 - **SQL Operations**: Execute queries, updates, and result set processing
 
-### 6. JDBC Implementation (3 marks)
+### 6. JDBC Implementation 
 - **Connection Pooling**: Singleton pattern for connection management
 - **Transaction Management**: Proper transaction handling
 - **Error Handling**: Database exception handling with custom exceptions
 
-### 7. Problem Understanding & Solution Design (8 marks)
+### 7. Problem Understanding & Solution Design
 - **Architecture**: Well-structured MVC-like architecture
 - **Design Patterns**: Singleton, DAO, Factory patterns
 - **Separation of Concerns**: Clear separation between model, service, and data access layers
 - **Scalability**: Designed for concurrent access and scalability
 
-### 8. Core Java Concepts (10 marks)
+### 8. Core Java Concepts
 - **Classes & Objects**: Multiple classes with proper encapsulation
 - **Encapsulation**: Private fields with public getters/setters
 - **Method Overriding**: Interface method implementations
@@ -57,13 +57,13 @@ This project implements a blockchain-based supply chain management system that t
 - **String Manipulation**: Hash calculation and string operations
 - **Date/Time API**: `LocalDateTime` for timestamps
 
-### 9. Database Integration (JDBC) (8 marks)
+### 9. Database Integration (JDBC)
 - **Schema Design**: Comprehensive database schema with proper indexing
 - **Data Persistence**: Blocks and transactions stored in MySQL database
 - **Data Retrieval**: Efficient querying with indexes
 - **Data Integrity**: Foreign key relationships and constraints
 
-### 10. Servlets & Web Integration (7 marks)
+### 10. Servlets & Web Integration 
 - **Servlets**: `BlockchainServlet` and `TransactionServlet` for REST API
 - **Web Interface**: JSP page with modern UI for interaction
 - **REST API**: JSON-based API endpoints
