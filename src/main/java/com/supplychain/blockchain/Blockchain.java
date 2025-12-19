@@ -56,6 +56,14 @@ public class Blockchain implements IBlockchain {
         }
         return true;
     }
+    // -------- Review-2 Innovation: Tamper Detection --------
+public void tamperBlock(int index, String fakeData) {
+    if (index <= 0 || index >= chain.size()) {
+        throw new IllegalArgumentException("Invalid block index");
+    }
+    Block block = chain.get(index);
+    block.setData(fakeData); // Tampering data
+}
     
     @Override
     public List<Block> getBlocks() {
