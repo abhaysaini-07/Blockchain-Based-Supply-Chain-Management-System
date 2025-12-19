@@ -228,9 +228,9 @@ Create a test class to verify:
 
 ## 👨‍💻 Author
 
-Blockchain-Based Supply Chain Management System
+## Author
+Name: Abhay Saini  
 
 ## 📄 License
-
 This project is created for educational purposes.
 
