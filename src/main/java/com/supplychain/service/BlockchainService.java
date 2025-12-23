@@ -17,68 +17,83 @@ import com.supplychain.model.Transaction;
  * Demonstrates: Multithreading, Synchronization, Service Layer
  */
 public class BlockchainService {
+
     private final Blockchain blockchain;
     private final BlockDAO blockDAO;
     private final ExecutorService executorService;
-    private final Object lock = new Object(); // For synchronization
-    
+    private final Object lock = new Object(); // synchronization lock
+
     public BlockchainService(int difficulty) {
         this.blockchain = new Blockchain(difficulty);
         this.blockDAO = new BlockDAO();
         this.executorService = Executors.newFixedThreadPool(5);
     }
-    
+
     /**
-     * Add a transaction to the blockchain asynchronously
-     * Demonstrates: Multithreading, Synchronization
+     * Add a transaction asynchronously
+     * Demonstrates: Multithreading + Synchronization
      */
     public CompletableFuture<Block> addTransactionAsync(Transaction transaction) {
         return CompletableFuture.supplyAsync(() -> {
             synchronized (lock) {
                 try {
+                    // ✅ Centralized validation (Review-2 compliant)
+                    TransactionService.validateTransaction(transaction);
+
                     Gson gson = new Gson();
                     String transactionJson = gson.toJson(transaction);
                     Block newBlock = blockchain.addBlock(transactionJson);
-                    
-                    // Save to database asynchronously
+
+                    // Save block & transaction asynchronously
                     executorService.submit(() -> {
                         blockDAO.saveBlock(newBlock);
                         blockDAO.saveTransaction(transaction);
                     });
-                    
+
                     return newBlock;
+
+                } catch (BlockchainException e) {
+                    throw new RuntimeException(
+                            "Transaction validation failed: " + e.getMessage(), e
+                    );
                 } catch (Exception e) {
-                    throw new RuntimeException("Error adding transaction", e);
+                    throw new RuntimeException(
+                            "Error adding transaction asynchronously", e
+                    );
                 }
             }
         }, executorService);
     }
-    
+
     /**
      * Add a transaction synchronously
-     * Demonstrates: Synchronization
      */
     public Block addTransaction(Transaction transaction) throws BlockchainException {
         synchronized (lock) {
+
+            // ✅ Centralized validation
+            TransactionService.validateTransaction(transaction);
+
             try {
                 Gson gson = new Gson();
                 String transactionJson = gson.toJson(transaction);
                 Block newBlock = blockchain.addBlock(transactionJson);
-                
-                // Save to database
+
                 blockDAO.saveBlock(newBlock);
                 blockDAO.saveTransaction(transaction);
-                
+
                 return newBlock;
+
             } catch (Exception e) {
-                throw new BlockchainException("Error adding transaction", e);
+                throw new BlockchainException(
+                        "Error adding transaction", e
+                );
             }
         }
     }
-    
+
     /**
      * Validate blockchain asynchronously
-     * Demonstrates: Multithreading
      */
     public CompletableFuture<Boolean> validateBlockchainAsync() {
         return CompletableFuture.supplyAsync(() -> {
@@ -87,7 +102,7 @@ public class BlockchainService {
             }
         }, executorService);
     }
-    
+
     /**
      * Get all blocks
      */
@@ -96,14 +111,14 @@ public class BlockchainService {
             return blockchain.getBlocks();
         }
     }
-    
+
     /**
      * Get all transactions from database
      */
     public List<Transaction> getAllTransactions() {
         return blockDAO.getAllTransactions();
     }
-    
+
     /**
      * Shutdown executor service
      */
@@ -111,4 +126,3 @@ public class BlockchainService {
         executorService.shutdown();
     }
 }
-

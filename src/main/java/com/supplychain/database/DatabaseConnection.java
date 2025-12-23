@@ -12,9 +12,9 @@ import com.supplychain.exception.DatabaseException;
  */
 public class DatabaseConnection {
     private static DatabaseConnection instance;
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/supplychain_db";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "password";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/blockchain_db";
+    private static final String DB_USER = "supplyuser";
+    private static final String DB_PASSWORD = "supplypass";
     
     private DatabaseConnection() {
         // Private constructor for singleton

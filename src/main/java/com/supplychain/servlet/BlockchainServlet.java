@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +18,7 @@ import com.supplychain.service.BlockchainService;
  * Servlet for blockchain operations
  * Demonstrates: Servlets, Web Integration
  */
-@WebServlet("/api/blockchain/*")
+
 public class BlockchainServlet extends HttpServlet {
     private BlockchainService blockchainService;
     private Gson gson;
